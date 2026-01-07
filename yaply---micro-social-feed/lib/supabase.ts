@@ -1,3 +1,3 @@
 
-// Supabase is not used in this project. Using Firebase for Auth and Firestore.
-export {};
+// Deprecated: Using LocalStorage for Zero-Config experience.
+export const supabase = null;

@@ -1,4 +1,4 @@
 
-// Firebase removed for Local-First ease of use.
+// Deprecated: Using LocalStorage for Zero-Config experience.
 export const auth = null;
 export const db = null;

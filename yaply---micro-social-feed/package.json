@@ -1,6 +1,6 @@
 
 {
-  "name": "yaply-local",
+  "name": "yaply-local-community",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -13,7 +13,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "lucide-react": "^0.462.0",
-    "canvas-confetti": "^1.9.3"
+    "canvas-confetti": "^1.9.3",
+    "framer-motion": "^11.11.17"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",

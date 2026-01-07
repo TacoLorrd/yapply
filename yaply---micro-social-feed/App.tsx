@@ -24,9 +24,9 @@ const App: React.FC = () => {
 
   const [me, setMe] = useState<UserProfile | null>(() => {
     const myId = localStorage.getItem(STORAGE_KEY_ME);
-    const savedUsers = localStorage.getItem(STORAGE_KEY_USERS);
-    if (myId && savedUsers) {
-      const allUsers = JSON.parse(savedUsers);
+    if (myId) {
+      const savedUsers = localStorage.getItem(STORAGE_KEY_USERS);
+      const allUsers = savedUsers ? JSON.parse(savedUsers) : INITIAL_USERS;
       return allUsers.find((u: any) => u.id === myId) || null;
     }
     return null;
@@ -40,7 +40,7 @@ const App: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOrder, setSortOrder] = useState<SortOrder>('newest');
 
-  // --- PERSISTENCE ---
+  // --- PERSISTENCE & SYNC ---
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY_POSTS, JSON.stringify(posts));
   }, [posts]);
@@ -53,6 +53,16 @@ const App: React.FC = () => {
     if (me) localStorage.setItem(STORAGE_KEY_ME, me.id);
     else localStorage.removeItem(STORAGE_KEY_ME);
   }, [me]);
+
+  // Sync across tabs
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === STORAGE_KEY_POSTS && e.newValue) setPosts(JSON.parse(e.newValue));
+      if (e.key === STORAGE_KEY_USERS && e.newValue) setUsers(JSON.parse(e.newValue));
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
 
   useEffect(() => {
     localStorage.setItem(THEME_STORAGE_KEY, isDarkMode ? 'dark' : 'light');
@@ -101,14 +111,6 @@ const App: React.FC = () => {
       
       return { ...p, reactions: nextReactions };
     }));
-  };
-
-  const deletePost = (id: string) => {
-    setPosts(prev => prev.filter(p => p.id !== id));
-  };
-
-  const updatePost = (id: string, newContent: string) => {
-    setPosts(prev => prev.map(p => p.id === id ? { ...p, content: newContent } : p));
   };
 
   const handleLogout = () => {
@@ -213,8 +215,9 @@ const App: React.FC = () => {
           
           <PostList 
             posts={filteredPosts} users={users}
-            currentUserId={me.id} onDelete={deletePost}
-            onUpdate={updatePost} onReaction={handleReaction}
+            currentUserId={me.id} onDelete={(id) => setPosts(p => p.filter(x => x.id !== id))}
+            onUpdate={(id, c) => setPosts(p => p.map(x => x.id === id ? { ...x, content: c } : x))} 
+            onReaction={handleReaction}
             onReply={() => {}} onProfileClick={handleProfileClick}
             onMentionClick={(val) => setSearchQuery(val)}
             viewType={view.type} spaceId={view.spaceId}
