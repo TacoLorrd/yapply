@@ -1,7 +1,8 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { Post, UserProfile, ViewState, SortOrder } from './types';
-import { THEME_STORAGE_KEY, STORAGE_KEY_POSTS, STORAGE_KEY_USERS, STORAGE_KEY_ME, INITIAL_POSTS, INITIAL_USERS } from './constants';
+import { THEME_STORAGE_KEY, STORAGE_KEY_ME, INITIAL_USERS, INITIAL_POSTS } from './constants';
+import { CloudStorage } from './services/cloudStorage';
 import Header from './components/Header';
 import PostForm from './components/PostForm';
 import PostList from './components/PostList';
@@ -9,27 +10,17 @@ import Sidebar from './components/Sidebar';
 import SearchFilter from './components/SearchFilter';
 import ProfileView from './components/ProfileView';
 import Auth from './components/Auth';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const App: React.FC = () => {
   // --- STATE ---
-  const [users, setUsers] = useState<UserProfile[]>(() => {
-    const saved = localStorage.getItem(STORAGE_KEY_USERS);
-    return saved ? JSON.parse(saved) : INITIAL_USERS;
-  });
-
-  const [posts, setPosts] = useState<Post[]>(() => {
-    const saved = localStorage.getItem(STORAGE_KEY_POSTS);
-    return saved ? JSON.parse(saved) : INITIAL_POSTS;
-  });
-
+  const [users, setUsers] = useState<UserProfile[]>(INITIAL_USERS);
+  const [posts, setPosts] = useState<Post[]>(INITIAL_POSTS);
+  const [isSyncing, setIsSyncing] = useState(false);
+  
   const [me, setMe] = useState<UserProfile | null>(() => {
     const myId = localStorage.getItem(STORAGE_KEY_ME);
-    if (myId) {
-      const savedUsers = localStorage.getItem(STORAGE_KEY_USERS);
-      const allUsers = savedUsers ? JSON.parse(savedUsers) : INITIAL_USERS;
-      return allUsers.find((u: any) => u.id === myId) || null;
-    }
-    return null;
+    return null; // Start logged out to ensure fresh sync
   });
 
   const [view, setView] = useState<ViewState>({ type: 'feed' });
@@ -40,29 +31,51 @@ const App: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOrder, setSortOrder] = useState<SortOrder>('newest');
 
-  // --- PERSISTENCE & SYNC ---
+  // --- INITIAL CLOUD LOAD ---
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY_POSTS, JSON.stringify(posts));
-  }, [posts]);
+    const loadInitialData = async () => {
+      setIsSyncing(true);
+      const [cloudPosts, cloudUsers] = await Promise.all([
+        CloudStorage.fetchPosts(),
+        CloudStorage.fetchUsers()
+      ]);
+      if (cloudPosts.length > 0) setPosts(cloudPosts);
+      if (cloudUsers.length > 0) setUsers(cloudUsers);
+      
+      // Check if I exist in the cloud
+      const myId = localStorage.getItem(STORAGE_KEY_ME);
+      if (myId) {
+        const foundMe = cloudUsers.find(u => u.id === myId);
+        if (foundMe) setMe(foundMe);
+      }
+      setIsSyncing(false);
+    };
+    loadInitialData();
+  }, []);
 
+  // --- CLOUD POLLING (Check for new posts every 5s) ---
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY_USERS, JSON.stringify(users));
-  }, [users]);
+    const interval = setInterval(async () => {
+      const cloudPosts = await CloudStorage.fetchPosts();
+      if (cloudPosts.length > 0) {
+        // Simple merge: prefer newest
+        setPosts(prev => {
+          const combined = [...cloudPosts];
+          prev.forEach(p => {
+            if (!combined.find(cp => cp.id === p.id)) combined.push(p);
+          });
+          return combined.sort((a, b) => b.timestamp - a.timestamp).slice(0, 50);
+        });
+      }
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
+  // --- PERSISTENCE ---
   useEffect(() => {
     if (me) localStorage.setItem(STORAGE_KEY_ME, me.id);
     else localStorage.removeItem(STORAGE_KEY_ME);
   }, [me]);
-
-  // Sync across tabs
-  useEffect(() => {
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === STORAGE_KEY_POSTS && e.newValue) setPosts(JSON.parse(e.newValue));
-      if (e.key === STORAGE_KEY_USERS && e.newValue) setUsers(JSON.parse(e.newValue));
-    };
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
 
   useEffect(() => {
     localStorage.setItem(THEME_STORAGE_KEY, isDarkMode ? 'dark' : 'light');
@@ -71,16 +84,14 @@ const App: React.FC = () => {
   }, [isDarkMode]);
 
   // --- ACTIONS ---
-  const handleAuth = (user: UserProfile) => {
-    setUsers(prev => {
-      const exists = prev.find(u => u.id === user.id);
-      if (exists) return prev;
-      return [...prev, user];
-    });
+  const handleAuth = async (user: UserProfile) => {
     setMe(user);
+    const updatedUsers = [...users, user];
+    setUsers(updatedUsers);
+    await CloudStorage.saveUsers(updatedUsers);
   };
 
-  const addPost = (content: string, spaceId: string = 'general') => {
+  const addPost = async (content: string, spaceId: string = 'general') => {
     if (!me) return;
     const newPost: Post = {
       id: crypto.randomUUID(),
@@ -93,12 +104,14 @@ const App: React.FC = () => {
       replies: [],
       isPinned: false
     };
-    setPosts(prev => [newPost, ...prev]);
+    const updatedPosts = [newPost, ...posts];
+    setPosts(updatedPosts);
+    await CloudStorage.savePosts(updatedPosts);
   };
 
-  const handleReaction = (postId: string, emoji: string) => {
+  const handleReaction = async (postId: string, emoji: string) => {
     if (!me) return;
-    setPosts(prev => prev.map(p => {
+    const nextPosts = posts.map(p => {
       if (p.id !== postId) return p;
       const current = p.reactions[emoji] || [];
       const newUsers = current.includes(me.id) 
@@ -110,7 +123,9 @@ const App: React.FC = () => {
       else nextReactions[emoji] = newUsers;
       
       return { ...p, reactions: nextReactions };
-    }));
+    });
+    setPosts(nextPosts);
+    await CloudStorage.savePosts(nextPosts);
   };
 
   const handleLogout = () => {
@@ -168,7 +183,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen transition-colors duration-300 bg-slate-50 dark:bg-[#020617]">
+    <div className="min-h-screen transition-colors duration-300 bg-slate-50 dark:bg-[#020617] selection:bg-blue-500/30">
       <Header 
         isDarkMode={isDarkMode} 
         onToggleTheme={() => setIsDarkMode(prev => !prev)} 
@@ -176,6 +191,7 @@ const App: React.FC = () => {
         onHome={() => { setView({ type: 'feed' }); setSearchQuery(''); }}
         onProfile={() => handleProfileClick(me.id)}
         onLogout={handleLogout}
+        isSyncing={isSyncing}
       />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col lg:flex-row gap-8">
@@ -191,32 +207,44 @@ const App: React.FC = () => {
           />
         </aside>
         <section className="lg:w-2/4 flex flex-col gap-6">
-          {view.type === 'profile' && view.profileId && !searchQuery ? (
-            <ProfileView 
-              key={view.profileId}
-              user={users.find(u => u.id === view.profileId) || me} 
-              allUsers={users}
-              isMe={view.profileId === me.id}
-              isFollowing={me.following?.includes(view.profileId) || false}
-              onFollowToggle={() => {}} 
-              onUpdateProfile={() => {}}
-              onProfileClick={handleProfileClick}
-            />
-          ) : (
-            <>
-              {!searchQuery && <PostForm onPost={addPost} me={me} defaultSpace={view.type === 'space' ? view.spaceId : 'general'} />}
-              <SearchFilter 
-                searchQuery={searchQuery} setSearchQuery={setSearchQuery} 
-                sortOrder={sortOrder} setSortOrder={setSortOrder}
-                activeFilter={null} clearFilter={() => setSearchQuery('')}
-              />
-            </>
-          )}
+          <AnimatePresence mode="wait">
+            {view.type === 'profile' && view.profileId && !searchQuery ? (
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
+                <ProfileView 
+                  key={view.profileId}
+                  user={users.find(u => u.id === view.profileId) || me} 
+                  allUsers={users}
+                  isMe={view.profileId === me.id}
+                  isFollowing={me.following?.includes(view.profileId) || false}
+                  onFollowToggle={() => {}} 
+                  onUpdateProfile={() => {}}
+                  onProfileClick={handleProfileClick}
+                />
+              </motion.div>
+            ) : (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
+                {!searchQuery && <PostForm onPost={addPost} me={me} defaultSpace={view.type === 'space' ? view.spaceId : 'general'} />}
+                <SearchFilter 
+                  searchQuery={searchQuery} setSearchQuery={setSearchQuery} 
+                  sortOrder={sortOrder} setSortOrder={setSortOrder}
+                  activeFilter={null} clearFilter={() => setSearchQuery('')}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
           
           <PostList 
             posts={filteredPosts} users={users}
-            currentUserId={me.id} onDelete={(id) => setPosts(p => p.filter(x => x.id !== id))}
-            onUpdate={(id, c) => setPosts(p => p.map(x => x.id === id ? { ...x, content: c } : x))} 
+            currentUserId={me.id} onDelete={(id) => {
+              const updated = posts.filter(x => x.id !== id);
+              setPosts(updated);
+              CloudStorage.savePosts(updated);
+            }}
+            onUpdate={(id, c) => {
+              const updated = posts.map(x => x.id === id ? { ...x, content: c } : x);
+              setPosts(updated);
+              CloudStorage.savePosts(updated);
+            }} 
             onReaction={handleReaction}
             onReply={() => {}} onProfileClick={handleProfileClick}
             onMentionClick={(val) => setSearchQuery(val)}
