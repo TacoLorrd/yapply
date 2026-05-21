@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-labelledby="webTitle">
+  <title id="webTitle">Illustration of a responsive website layout on multiple devices</title>
+  <rect x="8" y="16" width="224" height="148" rx="26" fill="#ffffff" stroke="#dbe7fb" stroke-width="10" />
+  <rect x="24" y="36" width="192" height="104" rx="18" fill="#eef4ff" />
+  <rect x="40" y="52" width="112" height="18" rx="8" fill="#2b6ef0" />
+  <rect x="40" y="82" width="152" height="10" rx="5" fill="#aec7ff" />
+  <rect x="40" y="100" width="118" height="10" rx="5" fill="#aec7ff" />
+  <rect x="40" y="118" width="90" height="10" rx="5" fill="#aec7ff" />
+  <circle cx="180" cy="136" r="12" fill="#2b6ef0" />
+</svg>

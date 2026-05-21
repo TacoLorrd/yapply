@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 180" role="img" aria-labelledby="appTitle">
+  <title id="appTitle">Illustration of a study planner app interface</title>
+  <rect width="220" height="180" rx="30" fill="#ffffff" stroke="#dbe7fb" stroke-width="10" />
+  <rect x="28" y="24" width="164" height="26" rx="10" fill="#2b6ef0" />
+  <rect x="28" y="64" width="164" height="22" rx="10" fill="#eef4ff" />
+  <rect x="28" y="96" width="164" height="22" rx="10" fill="#eef4ff" />
+  <rect x="28" y="128" width="164" height="22" rx="10" fill="#eef4ff" />
+  <circle cx="62" cy="80" r="6" fill="#2b6ef0" />
+  <circle cx="62" cy="112" r="6" fill="#2b6ef0" />
+</svg>
