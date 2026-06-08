@@ -3,34 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>YApply | Contact</title>
-  <meta name="description" content="Contact Alex for web projects, club sites, or student design collaborations." />
+  <title>NebulaNoord | Contact</title>
+  <meta name="description" content="Contact Kaydem at NebulaNoord for web projects, club sites, or student design collaborations." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="images/noord.png" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="index.html">YApply</a>
-      <nav id="navigation" class="site-nav" aria-label="Main navigation">
-        <ul class="nav-list">
+  <header class="navbar">
+    <a href="index.html" class="navbar-logo">
+      <img src="images/noord.png" alt="" aria-hidden="true" width="28" height="28" style="border-radius: 6px;" />
+      NebulaNoord
+    </a>
+    <div class="navbar-right">
+      <div class="mobile-menu">
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-expanded="false" aria-label="Open navigation">
+          <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="20" height="2" rx="1" fill="black"/>
+            <rect y="6" width="20" height="2" rx="1" fill="black"/>
+            <rect y="12" width="20" height="2" rx="1" fill="black"/>
+          </svg>
+        </button>
+        <ul class="mobile-dropdown" id="mobileDropdown">
           <li><a href="index.html">Home</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="projects.html">Projects</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
-      </nav>
-      <div class="header-actions">
-        <a class="button button-secondary nav-resume" href="contact.html">Resume</a>
-        <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navigation">
-          <span class="sr-only">Open navigation</span>
-          <span class="bar"></span>
-          <span class="bar"></span>
-          <span class="bar"></span>
-        </button>
       </div>
+      <ul class="desktop-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
     </div>
   </header>
 
@@ -42,7 +50,7 @@
           <h1>Let’s build something great together.</h1>
           <p class="hero-text">Send a message about a club website, a class project, or a creative idea. I reply quickly and enjoy working with new teams.</p>
         </div>
-        <div class="project-summary-card feature-panel animate-on-scroll">
+        <div class="project-summary-card feature-panel">
           <p class="eyebrow">Reach out</p>
           <h2>Ready for new school and community work</h2>
           <p>Use the form below or send an email if you'd like help with a website, event page, or project presentation.</p>
@@ -50,14 +58,14 @@
       </div>
     </section>
 
-    <section class="section section-alt container contact-grid animate-on-scroll">
+    <section class="section section-alt container contact-grid">
       <div class="contact-info">
         <p class="eyebrow">Contact details</p>
         <h2>Open for school and community projects.</h2>
         <p>If you have an idea for a page, club website, or project, send a message and I’ll share how I can help.</p>
         <ul class="info-list">
-          <li><strong>Email:</strong> <a href="mailto:alex@yapply.dev">alex@yapply.dev</a></li>
-          <li><strong>GitHub:</strong> <a href="https://github.com/" target="_blank" rel="noopener">github.com/alex</a></li>
+          <li><strong>Email:</strong> <a href="mailto:Kayden@nebulanerd.com">Kayden@nebulanerd.com</a></li>
+          <li><strong>GitHub:</strong> <a href="https://github.com/NebulaNoord" target="_blank" rel="noopener">github.com/NebulaNoord</a></li>
           <li><strong>Availability:</strong> Weekdays after classes</li>
         </ul>
       </div>
@@ -84,19 +92,41 @@
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-inner">
-      <p>© 2026 YApply Portfolio. Built with HTML, CSS, and JavaScript.</p>
-      <nav aria-label="Footer navigation">
-        <ul class="footer-links">
-          <li><a href="about.html">About</a></li>
-          <li><a href="projects.html">Projects</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </nav>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a class="footer-logo" href="index.html">NebulaNoord</a>
+          <p class="footer-tagline">Web &amp; Software Development</p>
+          <p class="footer-mission">Designed and built with performance in mind.</p>
+        </div>
+        <nav class="footer-col" aria-label="Footer navigation">
+          <p class="footer-label">Quick links</p>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="footer-col">
+          <p class="footer-label">Contact</p>
+          <p class="footer-contact">
+            <a href="mailto:Kayden@nebulanerd.com">Kayden@nebulanerd.com</a>
+          </p>
+          <ul class="footer-social" aria-label="Social links">
+            <li><a href="https://github.com/NebulaNoord" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 NebulaNoord. All rights reserved.</p>
+      </div>
     </div>
   </footer>
 
+  <script src="js/shimmer-bg.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/contact.js"></script>
+  <script src="js/char-counter.js"></script>
 </body>
 </html>

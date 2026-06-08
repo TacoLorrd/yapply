@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NebulaNoord | Home</title>
+  <meta name="description" content="NebulaNoord — Kaydem's student portfolio showcasing modern websites, projects, and design skills." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="images/noord.png" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="navbar">
+    <a href="index.html" class="navbar-logo">
+      <img src="images/noord.png" alt="" aria-hidden="true" width="28" height="28" style="border-radius: 6px;" />
+      NebulaNoord
+    </a>
+    <div class="navbar-right">
+      <div class="mobile-menu">
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-expanded="false" aria-label="Open navigation">
+          <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="20" height="2" rx="1" fill="black"/>
+            <rect y="6" width="20" height="2" rx="1" fill="black"/>
+            <rect y="12" width="20" height="2" rx="1" fill="black"/>
+          </svg>
+        </button>
+        <ul class="mobile-dropdown" id="mobileDropdown">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <ul class="desktop-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero-section">
+      <div class="container hero-grid">
+        <div class="hero-copy animate-on-scroll">
+          <p id="greeting" class="greeting"></p>
+          <p class="eyebrow">Web Developer • Student • Creative Problem Solver</p>
+          <h1>Building modern websites and digital experiences.</h1>
+          <p class="hero-text">I design polished, responsive sites with clear structure, thoughtful motion, and accessible interactions — all built with HTML, CSS, and vanilla JavaScript.</p>
+          <ul class="tech-stack" aria-label="Core technologies">
+            <li class="tech-stack__item">
+              <img src="images/icons/icon-html.svg" alt="" width="22" height="22" />
+              <span>HTML</span>
+            </li>
+            <li class="tech-stack__item">
+              <img src="images/icons/icon-css.svg" alt="" width="22" height="22" />
+              <span>CSS</span>
+            </li>
+            <li class="tech-stack__item">
+              <img src="images/icons/icon-javascript.svg" alt="" width="22" height="22" />
+              <span>JavaScript</span>
+            </li>
+          </ul>
+          <div class="hero-actions">
+            <a class="button button-primary" href="projects.html">View Projects</a>
+            <a class="button button-secondary" href="contact.html">Contact Me</a>
+          </div>
+        </div>
+        <div class="hero-card feature-panel" aria-label="Featured project preview">
+          <img src="images/nebulastudy-1.webp" alt="NebulaStudy app" />
+          <div class="hero-card-content">
+            <p class="eyebrow">Featured Project</p>
+            <h2>NebulaStudy</h2>
+            <p>A free, privacy-first student productivity app — tasks, notes, a study planner, and focus timer with no sign-up or tracking. Everything stays on your device.</p>
+            <div class="project-meta">
+              <span class="tech-badges" aria-label="HTML, CSS, JavaScript, Python">
+                <img src="images/icons/icon-html.svg" alt="HTML" width="18" height="18" />
+                <img src="images/icons/icon-css.svg" alt="CSS" width="18" height="18" />
+                <img src="images/icons/icon-javascript.svg" alt="JavaScript" width="18" height="18" />
+                <img src="images/icons/icon-python.svg" alt="Python" width="18" height="18" />
+              </span>
+              <span>Web app</span>
+            </div>
+            <div class="hero-actions">
+              <a class="button button-primary" href="https://nebulaastudy.vercel.app/" target="_blank" rel="noopener noreferrer">Live Demo</a>
+              <a class="button button-secondary" href="https://github.com/NebulaNoord/NebulaStudy" target="_blank" rel="noopener noreferrer">View Code</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt container" id="skills">
+      <div class="section-header">
+        <p class="eyebrow">Skills</p>
+        <h2>What I build with</h2>
+      </div>
+      <div class="cards-grid">
+        <article class="skill-card">
+          <div class="skill-card__head">
+            <span class="lang-icon"><img src="images/icons/icon-html.svg" alt="" width="28" height="28" /></span>
+            <h3>HTML</h3>
+          </div>
+          <p>Semantic markup and strong content structure for every page.</p>
+        </article>
+        <article class="skill-card">
+          <div class="skill-card__head">
+            <span class="lang-icon"><img src="images/icons/icon-css.svg" alt="" width="28" height="28" /></span>
+            <h3>CSS</h3>
+          </div>
+          <p>Responsive layouts, spacing systems, and subtle hover animation.</p>
+        </article>
+        <article class="skill-card">
+          <div class="skill-card__head">
+            <span class="lang-icon lang-icon--javascript"><img src="images/icons/icon-javascript.svg" alt="" width="28" height="28" /></span>
+            <h3>JavaScript</h3>
+          </div>
+          <p>Interactive filtering, validation, and DOM-powered user feedback.</p>
+        </article>
+        <article class="skill-card">
+          <div class="skill-card__head">
+            <span class="lang-icon"><img src="images/icons/icon-ui.svg" alt="" width="28" height="28" /></span>
+            <h3>UI/UX</h3>
+          </div>
+          <p>Readable typography, clean navigation, and polished user flows.</p>
+        </article>
+        <article class="skill-card">
+          <div class="skill-card__head">
+            <span class="lang-icon"><img src="images/icons/icon-responsive.svg" alt="" width="28" height="28" /></span>
+            <h3>Responsive design</h3>
+          </div>
+          <p>Layouts that adapt nicely on phones, tablets, and desktop screens.</p>
+        </article>
+        <article class="skill-card">
+          <div class="skill-card__head">
+            <span class="lang-icon"><img src="images/icons/icon-planning.svg" alt="" width="28" height="28" /></span>
+            <h3>Project planning</h3>
+          </div>
+          <p>Clear wireframes, visual direction, and consistent design tools.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-alt container animate-on-scroll">
+      <div class="feature-grid">
+        <div class="feature-image profile-photo" role="img" aria-label="Profile photo for the about preview">
+          <img src="images/profile.png" alt="Profile photo of a student developer" />
+        </div>
+        <div class="feature-panel">
+          <p class="eyebrow">About me</p>
+          <h3>Student developer</h3>
+          <p>Hey, I’m Kayden — a high school student and web developer based in Lethbridge, Alberta. I build websites and small projects using HTML, CSS, JavaScript, and some beginner Python. Most of what I know came from just trying things out, breaking them, and figuring out how to fix them.
+
+I usually learn by doing. That means a lot of experimenting, problem-solving, and improving things as I go. I like building things that actually work well and are easy to use, not just stuff that looks good on the surface.
+Outside of coding, I’m into tech, city-building games, woodworking, and thinking through business or side project ideas. Right now I’m focused on improving my skills and building up a portfolio that shows what I can actually do, not just what I’ve learned.</p>
+          <a class="button button-secondary" href="about.html">Learn more</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a class="footer-logo" href="index.html">NebulaNoord</a>
+          <p class="footer-tagline">Web &amp; Software Development</p>
+          <p class="footer-mission">Designed and built with performance in mind.</p>
+        </div>
+        <nav class="footer-col" aria-label="Footer navigation">
+          <p class="footer-label">Quick links</p>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="footer-col">
+          <p class="footer-label">Contact</p>
+          <p class="footer-contact">
+            <a href="mailto:Kayden@nebulanerd.com">Kayden@nebulanerd.com</a>
+          </p>
+          <ul class="footer-social" aria-label="Social links">
+            <li><a href="https://github.com/NebulaNoord" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 NebulaNoord. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/shimmer-bg.js"></script>
+  <script src="js/greeting.js"></script>
+  <script src="js/ui.js"></script>
+</body>
+</html>

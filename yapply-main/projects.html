@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NebulaNoord | Projects</title>
+  <meta name="description" content="Explore Kaydem’s web and design projects at NebulaNoord — HTML, CSS, and vanilla JavaScript." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="images/noord.png" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="navbar">
+    <a href="index.html" class="navbar-logo">
+      <img src="images/noord.png" alt="" aria-hidden="true" width="28" height="28" style="border-radius: 6px;" />
+      NebulaNoord
+    </a>
+    <div class="navbar-right">
+      <div class="mobile-menu">
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-expanded="false" aria-label="Open navigation">
+          <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="20" height="2" rx="1" fill="black"/>
+            <rect y="6" width="20" height="2" rx="1" fill="black"/>
+            <rect y="12" width="20" height="2" rx="1" fill="black"/>
+          </svg>
+        </button>
+        <ul class="mobile-dropdown" id="mobileDropdown">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <ul class="desktop-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero animate-on-scroll">
+      <div class="container page-hero-grid">
+        <div>
+          <p class="eyebrow">Projects</p>
+          <h1>Web work that blends design and code.</h1>
+          <p class="hero-text">Each project below highlights a clear goal, the tools I used, and why the finished page works well for users.</p>
+        </div>
+        <div class="project-summary-card feature-panel">
+          <p class="eyebrow">Featured collection</p>
+          <h2>Responsive websites and UI concepts</h2>
+          <p>From landing pages to interactive mockups, these projects show how I combine structure, style, and accessibility.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt container">
+      <div class="section-header">
+        <p class="eyebrow">Featured project</p>
+        <h2>Highlighted work</h2>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-image">
+          <img src="images/mazelogo.png" alt="Maze Runner game logo" />
+        </div>
+        <div class="feature-panel">
+          <p class="eyebrow">Maze Runner</p>
+          <h3>A retro pixel-art maze game with teleport portals.</h3>
+          <p>A fast, dependency-free web page featuring 999 procedurally generated levels, coin collection, a skin shop, mobile controls, and save-state progress.</p>
+          <div class="project-meta">
+            <span class="tech-badges" aria-label="HTML, CSS, JavaScript">
+              <img src="images/icons/icon-html.svg" alt="HTML" width="18" height="18" />
+              <img src="images/icons/icon-css.svg" alt="CSS" width="18" height="18" />
+              <img src="images/icons/icon-javascript.svg" alt="JavaScript" width="18" height="18" />
+            </span>
+            <span>Responsive layout</span>
+          </div>
+          <div class="hero-actions">
+            <a class="button button-primary" href="https://mazeerunner.vercel.app/" target="_blank" rel="noopener">View Demo</a>
+            <a class="button button-secondary" href="https://github.com/NebulaNoord" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container">
+      <div class="section-header">
+        <p class="eyebrow">Filter</p>
+        <h2>Filter by project type</h2>
+      </div>
+      <div class="filter-buttons" role="group" aria-label="Project filter options">
+        <button type="button" class="filter-button active" data-filter="all">All</button>
+        <button type="button" class="filter-button" data-filter="design">Design</button>
+        <button type="button" class="filter-button" data-filter="web">Web</button>
+        <button type="button" class="filter-button" data-filter="interactive">Interactive</button>
+      </div>
+    </section>
+
+    <section class="section container" id="projectsSection">
+      <div class="projects-grid" id="projectCards" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a class="footer-logo" href="index.html">NebulaNoord</a>
+          <p class="footer-tagline">Web &amp; Software Development</p>
+          <p class="footer-mission">Designed and built with performance in mind.</p>
+        </div>
+        <nav class="footer-col" aria-label="Footer navigation">
+          <p class="footer-label">Quick links</p>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="footer-col">
+          <p class="footer-label">Contact</p>
+          <p class="footer-contact">
+            <a href="mailto:Kayden@nebulanerd.com">Kayden@nebulanerd.com</a>
+          </p>
+          <ul class="footer-social" aria-label="Social links">
+            <li><a href="https://github.com/NebulaNoord" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 NebulaNoord. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/shimmer-bg.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/projects.js"></script>
+</body>
+</html>
